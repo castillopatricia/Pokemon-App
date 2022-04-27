@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
       unique: true,
     },
     id: {
-      type: DataTypes.UUID, // numero random con letras y n'umeros que no se va a repetir
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },

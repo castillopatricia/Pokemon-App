@@ -3,46 +3,12 @@ const { Router } = require("express");
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require("axios");
 const { Pokemon, Tipo } = require("../db");
-
+const { getAllPokemons } = require("../controllers/controllers");
 const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 // funciones controladoras:
-const getApiInfo = async () => {
-  const response = await axios.get("https://pokeapi.co/api/v2/pokemon");
-
-  const results = response.data.results;
-  const promises = results.map((el) => axios.get(el.url));
-  const responses = await Promise.all(promises);
-  const pokemons = responses.map((response) => {
-    return {
-      nombre: response.data.name,
-      imagen: response.data.sprites.other["official-artwork"].front_default,
-      tipo: response.data.types.map((el) => el.type.name),
-      id: response.data.id,
-    };
-  });
-  return pokemons;
-};
-const getDbInfo = async () => {
-  return await Pokemon.findAll({
-    include: {
-      model: Tipo,
-      atributes: ["nombre"],
-      through: {
-        attributes: [],
-      },
-    },
-    attributes: ["nombre", "id"],
-  });
-};
-const getAllPokemons = async () => {
-  const apiInfo = await getApiInfo();
-  const dbInfo = await getDbInfo();
-  const infoConcatenada = apiInfo.concat(dbInfo);
-  return infoConcatenada;
-};
 router.get("/pokemons", async (req, res) => {
   const { name } = req.query;
   const pokemonsTotal = await getAllPokemons();
@@ -61,6 +27,7 @@ router.get("/pokemons", async (req, res) => {
     res.status(200).send(pokemonsTotal);
   }
 });
+
 router.get("/pokemons/:idPokemon", async (req, res) => {
   try {
     const { idPokemon } = req.params;
@@ -87,10 +54,50 @@ router.get("/pokemons/:idPokemon", async (req, res) => {
     res.status(404).send("No se encontro el pokemon requerido");
   }
 });
+router.post("/pokemons", async (req, res) => {
+  const { nombre } = req.body;
+  if (!nombre) {
+    return res.status(404).send("No se puede crear el pokemon");
+  }
+  try {
+    const pokemonCreated = await Pokemon.create(req.body);
+    res.send(pokemonCreated);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+});
 
 router.get("/types", async (req, res) => {
-  const typesApi = await axios.get(" https://pokeapi.co/api/v2/type");
-  const types = typesApi.data.map((el) => el.types);
-  res.status(200).send(types);
+  const typesApi = await axios.get("https://pokeapi.co/api/v2/type");
+
+  const types = typesApi.data.results.map((el) => {
+    return el.name;
+  });
+  types.forEach((t) => {
+    Tipo.findOrCreate({
+      where: { nombre: t },
+    });
+  });
+  const todosLosTipos = await Tipo.findAll();
+  res.json(todosLosTipos);
 });
 module.exports = router;
+
+//router.get("/types", async (req, res) => {
+//findall de tipo, si devuelve array vacio, consultar a la api y crear los tipos.
+//   const resultados = await Tipo.findAll();
+//   if (resultados.length === 0) {
+//     const typesApi = await axios.get("https://pokeapi.co/api/v2/type");
+
+//     const types = typesApi.data.results.map((el) => {
+//       return el.name;
+//     });
+//     for (let i = 0; i < types.length; i++) {
+//       let nombre = types[i];
+//       const result = await Tipo.create({ nombre: nombre });
+//       resultados.push(result);
+//     }
+//   }
+//   res.send(resultados);
+
+///[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.test(id)
