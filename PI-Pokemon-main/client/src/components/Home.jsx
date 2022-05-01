@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemons, getTypes } from "../actions";
+import { getPokemons, getTypes, filterByTypes, filterByCreate } from "../actions";
 import { Link } from "react-router-dom";
 import Pokemon from "./Pokemon";
 import "./home.css";
@@ -9,7 +9,7 @@ import Pagination from "./Pagination";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const allPokemons = useSelector((state) => state.pokemons);
+  const pokemons = useSelector((state) => state.pokemons);
   const types = useSelector((state) => state.types);
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(12);
@@ -27,10 +27,19 @@ export default function Home() {
   function paginate() {
     const indexOfLastPokemon = currentPage * pokemonsPerPage;
     const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-    const currentPokemons = allPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
+    const currentPokemons = pokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
     return currentPokemons;
   }
   const paginatedPokemons = paginate();
+
+  function handleFilterByTypes(e) {
+    setCurrentPage(1);
+    dispatch(filterByTypes(e.target.value));
+  }
+  function handleFilterByCreate(e) {
+    setCurrentPage(1);
+    dispatch(filterByCreate(e.target.value));
+  }
 
   return (
     <div>
@@ -56,31 +65,29 @@ export default function Home() {
           <option>A - Z</option>
           <option> Z - A</option>
         </select>
-        <select defaultValue="">
-          <option value="" disabled>
-            tipos de pokemons
-          </option>
+        <select onChange={(e) => handleFilterByTypes(e)}>
+          <option value="All">todos los tipos</option>
 
           {types.map((t) => (
             <option key={t.id}>{t.nombre}</option>
           ))}
         </select>
-        <select>
+        <select onChange={(e) => handleFilterByCreate(e)}>
+          <option value="All">todos los pokemons</option>
           <option value="created">creados en base de datos</option>
           <option value="Api">de pokeApi</option>
-          <option value="All">todos los pokemons</option>
         </select>
       </div>
 
       <div className="pokemons">
         {paginatedPokemons.map((p) => (
-          <Pokemon nombre={p.nombre} imagen={p.imagen} tipo={p.tipo} key={p.id} />
+          <Pokemon nombre={p.nombre} imagen={p.imagen} tipos={p.tipos} key={p.id} />
         ))}
       </div>
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        totalCount={allPokemons.length}
+        totalCount={pokemons.length}
         pokemonsPerPage={pokemonsPerPage}
       />
     </div>
