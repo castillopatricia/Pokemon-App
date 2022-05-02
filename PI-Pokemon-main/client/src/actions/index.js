@@ -32,3 +32,16 @@ export function filterByCreate(payload) {
     payload: payload,
   };
 }
+
+export function orderByName(payload) {
+  return {
+    type: "ORDER_BY_NAME",
+    payload: payload,
+  };
+}
+export function orderByForce(payload) {
+  return {
+    type: "ORDER_BY_FORCE",
+    payload: payload,
+  };
+}

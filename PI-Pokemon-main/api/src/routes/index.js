@@ -61,6 +61,9 @@ router.post("/pokemons", async (req, res) => {
   }
   try {
     const pokemonCreated = await Pokemon.create(req.body);
+    // addTipos crea la asociacion de tablas.
+    // Se debería validar antes de crear el pokemon, si recibe tipos que estos existan en la db, y que no esten repetidos.
+    await pokemonCreated.addTipos(req.body.tipos);
     res.send(pokemonCreated);
   } catch (error) {
     res.status(404).send(error);

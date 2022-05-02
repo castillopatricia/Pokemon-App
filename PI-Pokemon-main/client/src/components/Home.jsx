@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemons, getTypes, filterByTypes, filterByCreate } from "../actions";
+import { getPokemons, getTypes, filterByTypes, filterByCreate, orderByName, orderByForce } from "../actions";
 import { Link } from "react-router-dom";
 import Pokemon from "./Pokemon";
 import "./home.css";
@@ -13,6 +13,7 @@ export default function Home() {
   const types = useSelector((state) => state.types);
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(12);
+  const [order, setOrder] = useState("");
 
   useEffect(() => {
     dispatch(getTypes());
@@ -40,7 +41,19 @@ export default function Home() {
     setCurrentPage(1);
     dispatch(filterByCreate(e.target.value));
   }
+  function handleOrder(e) {
+    e.preventDefault();
+    setCurrentPage(1);
+    setOrder(e.target.value);
 
+    dispatch(orderByName(e.target.value));
+  }
+  function handleForce(e) {
+    e.preventDefault();
+    setCurrentPage(1);
+    setOrder(e.target.value);
+    dispatch(orderByForce(e.target.value));
+  }
   return (
     <div>
       <Link to="/home"> Ver Pokemon</Link>
@@ -57,13 +70,15 @@ export default function Home() {
           ingresar nombre
           <input />
         </form>
-        <select>
-          <option value="asc">mayor fuerza</option>
-          <option value="des">menor fuerza</option>
+        <select onChange={(e) => handleForce(e)}>
+          <option value="">fuerza</option>
+          <option value="mayor">mayor fuerza</option>
+          <option value="menor">menor fuerza</option>
         </select>
-        <select>
-          <option>A - Z</option>
-          <option> Z - A</option>
+        <select onChange={(e) => handleOrder(e)}>
+          <option value="">nombre</option>
+          <option value="asc">A - Z</option>
+          <option value="desc"> Z - A</option>
         </select>
         <select onChange={(e) => handleFilterByTypes(e)}>
           <option value="All">todos los tipos</option>

@@ -1,4 +1,5 @@
-import { filterByTypes } from "../actions";
+// import { filterByCreate, filterByTypes, orderByName, getPokemons, getTypes } from "../actions";
+import { filterPokemons, pokemonsOrder } from "../components/utils";
 
 const initialState = {
   pokemons: [],
@@ -7,6 +8,8 @@ const initialState = {
   allTypes: [],
   filteredByCreate: "All",
   filteredByType: "All",
+  orderedPokemonsByName: "",
+  orderedPokemonsByForce: "",
 };
 
 function rootReducer(state = initialState, action) {
@@ -23,44 +26,45 @@ function rootReducer(state = initialState, action) {
         types: action.payload,
       };
     case "FILTER_BY_TYPES": {
-      let pokemonsFilterByCreate;
-      if (state.filteredByCreate === "All") {
-        pokemonsFilterByCreate = state.allPokemons;
-      } else {
-        pokemonsFilterByCreate =
-          state.filteredByCreate === "created"
-            ? state.allPokemons.filter((p) => p.createdInDb === true) // booleano
-            : state.allPokemons.filter((p) => !p.createdInDb);
-      }
-      const pokemonsFilterByType = pokemonsFilterByCreate.filter((p) =>
-        p.tipos.find((t) => t.nombre === action.payload)
-      );
-
+      let pokemonsFilter = filterPokemons(state.allPokemons, state.filteredByCreate, action.payload);
+      let orderedPokemons = pokemonsOrder(pokemonsFilter, state.orderedPokemonsByName, state.orderedPokemonsByForce);
       return {
         ...state,
-        pokemons: action.payload === "All" ? pokemonsFilterByCreate : pokemonsFilterByType,
+        pokemons: orderedPokemons,
         filteredByType: action.payload,
       };
     }
 
     case "FILTER_BY_CREATE": {
-      let pokemonsFilterByType;
-      if (state.filteredByType === "All") {
-        pokemonsFilterByType = state.allPokemons;
-      } else {
-        pokemonsFilterByType = state.allPokemons.filter((p) => p.tipos.find((t) => t.nombre === state.filteredByType));
-      }
-      const pokemonsFilterByCreate =
-        action.payload === "created"
-          ? pokemonsFilterByType.filter((p) => p.createdInDb === true) // booleano
-          : pokemonsFilterByType.filter((p) => !p.createdInDb);
+      let pokemonsFilter = filterPokemons(state.allPokemons, action.payload, state.filteredByType);
+      let orderedPokemons = pokemonsOrder(pokemonsFilter, state.orderedPokemonsByName, state.orderedPokemonsByForce);
 
       return {
         ...state,
-        pokemons: action.payload === "All" ? pokemonsFilterByType : pokemonsFilterByCreate,
+        pokemons: orderedPokemons,
         filteredByCreate: action.payload,
       };
     }
+
+    case "ORDER_BY_NAME": {
+      let pokemonsFilter = filterPokemons(state.allPokemons, state.filteredByCreate, state.filteredByType);
+      let orderedPokemons = pokemonsOrder(pokemonsFilter, action.payload, state.orderedPokemonsByForce);
+      return {
+        ...state,
+        pokemons: orderedPokemons,
+        orderedPokemonsByName: action.payload,
+      };
+    }
+    case "ORDER_BY_FORCE": {
+      let pokemonsFilter = filterPokemons(state.allPokemons, state.filteredByCreate, state.filteredByType);
+      let orderedPokemons = pokemonsOrder(pokemonsFilter, state.orderedPokemonsByName, action.payload);
+      return {
+        ...state,
+        pokemons: orderedPokemons,
+        orderedPokemonsByForce: action.payload,
+      };
+    }
+
     default:
       return { ...state };
   }
