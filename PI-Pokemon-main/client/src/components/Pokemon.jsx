@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Pokemon({ nombre, tipos, imagen }) {
+export default function Pokemon({ nombre, tipos, imagen}) {
   return (
     <div>
       <h3>{nombre}</h3>

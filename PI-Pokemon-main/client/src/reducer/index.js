@@ -64,7 +64,15 @@ function rootReducer(state = initialState, action) {
         orderedPokemonsByForce: action.payload,
       };
     }
-
+    case "GET_POKEMONS_BY_NAME":
+      return {
+        ...state,
+        pokemons: [action.payload],
+      };
+    case "POST_POKEMON":
+      return {
+        ...state,
+      };
     default:
       return { ...state };
   }

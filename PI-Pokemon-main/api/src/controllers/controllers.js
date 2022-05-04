@@ -22,7 +22,7 @@ const getDbInfo = async () => {
   return await Pokemon.findAll({
     include: {
       model: Tipo,
-      attributes: ["nombre", "id"],
+      attributes: ["nombre", "id",],
       through: {
         attributes: [],
       },

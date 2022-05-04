@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Pokemon from "./Pokemon";
 import "./home.css";
 import Pagination from "./Pagination";
+import SearchBar from "./SearchBar";
+import PokemonCreate from "./PokemonCreate";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -13,7 +15,6 @@ export default function Home() {
   const types = useSelector((state) => state.types);
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(12);
-  const [order, setOrder] = useState("");
 
   useEffect(() => {
     dispatch(getTypes());
@@ -44,19 +45,20 @@ export default function Home() {
   function handleOrder(e) {
     e.preventDefault();
     setCurrentPage(1);
-    setOrder(e.target.value);
 
     dispatch(orderByName(e.target.value));
   }
   function handleForce(e) {
     e.preventDefault();
     setCurrentPage(1);
-    setOrder(e.target.value);
     dispatch(orderByForce(e.target.value));
   }
+
   return (
     <div>
       <Link to="/home"> Ver Pokemon</Link>
+      <br />
+      <Link to="/create"> Crear Pokemon</Link>
       <h1> Pagina principal de pokemons</h1>
       <button
         onClick={(e) => {
@@ -66,10 +68,8 @@ export default function Home() {
         cargar todos los pokemons
       </button>
       <div>
-        <form>
-          ingresar nombre
-          <input />
-        </form>
+        <SearchBar />
+
         <select onChange={(e) => handleForce(e)}>
           <option value="">fuerza</option>
           <option value="mayor">mayor fuerza</option>

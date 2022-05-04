@@ -1,4 +1,6 @@
 import axios from "axios";
+// import { bindActionCreators } from "redux";
+
 export function getPokemons() {
   return async function (dispatch) {
     var json = await axios.get("http://localhost:3001/pokemons");
@@ -43,5 +45,21 @@ export function orderByForce(payload) {
   return {
     type: "ORDER_BY_FORCE",
     payload: payload,
+  };
+}
+
+export function postPokemon(payload) {
+  return async function (dispatch) {
+    const response = await axios.post("http://localhost:3001/pokemons", payload);
+    return response.data;
+  };
+}
+export function getPokemonsByName(name) {
+  return async function (dispatch) {
+    var json = await axios.get("http://localhost:3001/pokemons?name=" + name);
+    return dispatch({
+      type: "GET_POKEMONS_BY_NAME",
+      payload: json.data,
+    });
   };
 }

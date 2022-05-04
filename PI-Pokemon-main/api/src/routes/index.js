@@ -11,19 +11,41 @@ const router = Router();
 // funciones controladoras:
 router.get("/pokemons", async (req, res) => {
   const { name } = req.query;
-  const pokemonsTotal = await getAllPokemons();
 
   if (name) {
-    let pokemonsName = pokemonsTotal.filter((el) => {
-      return el.nombre.toLowerCase() === name.toLowerCase();
-    });
-
-    if (pokemonsName.length !== 0) {
-      return res.status(200).send(pokemonsName);
-    } else {
+    try {
+      let pokemonDb = await Pokemon.findOne({
+        where: {
+          nombre: name,
+        },
+        include: {
+          model: Tipo,
+          attributes: ["nombre", "id"],
+          through: {
+            attributes: [],
+          },
+        },
+        attributes: ["nombre", "id", "createdInDb", "fuerza"],
+      });
+      if (pokemonDb) {
+        res.send(pokemonDb);
+      } else {
+        let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        let pokemon = {
+          nombre: response.data.name,
+          imagen: response.data.sprites.other["official-artwork"].front_default,
+          tipos: response.data.types.map((el) => ({ nombre: el.type.name })),
+          id: response.data.id,
+          fuerza: response.data.stats[1].base_stat,
+        };
+        res.send(pokemon);
+        console.log("🚀 ~ file: index.js ~ line 42 ~ router.get ~ pokemon", pokemon)
+      }
+    } catch (error) {
       res.status(404).send("No se encontró el pokemon ingresado");
     }
   } else {
+    const pokemonsTotal = await getAllPokemons();
     res.status(200).send(pokemonsTotal);
   }
 });
