@@ -23,7 +23,6 @@ export default function PokemonCreate() {
   });
   const errors = validate(input);
 
-  console.log("🚀 ~ file: PokemonCreate.jsx ~ line 25 ~ PokemonCreate ~ errors", errors);
 
   useEffect(() => {
     dispatch(getTypes());

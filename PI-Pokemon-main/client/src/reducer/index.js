@@ -10,6 +10,7 @@ const initialState = {
   filteredByType: "All",
   orderedPokemonsByName: "",
   orderedPokemonsByForce: "",
+  pokemonDetail: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -72,6 +73,11 @@ function rootReducer(state = initialState, action) {
     case "POST_POKEMON":
       return {
         ...state,
+      };
+    case "GET_POKEMON_DETAIL":
+      return {
+        ...state,
+        pokemonDetail: action.payload,
       };
     default:
       return { ...state };

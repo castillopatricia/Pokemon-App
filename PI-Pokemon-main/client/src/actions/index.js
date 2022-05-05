@@ -63,3 +63,12 @@ export function getPokemonsByName(name) {
     });
   };
 }
+export function getDetail(id) {
+  return async function (dispatch) {
+    var json = await axios.get("http://localhost:3001/pokemons/" + id);
+    return dispatch({
+      type: "GET_POKEMON_DETAIL",
+      payload: json.data,
+    });
+  };
+}

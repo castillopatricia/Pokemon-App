@@ -11,7 +11,13 @@ export function validate(input) {
   if (input.tipos.length === 0) {
     errors.tipos = "ingresar un tipo de pokemon";
   } else if (input.tipos.length > 1) {
-    errors.tipos = "solo se puede ingresar 2 tipos";
+    errors.tipos = "solo se pueden ingresar 2 tipos";
+  }
+
+  if (!input.imagen) {
+    errors.imagen = "imagen requerida";
+  } else if (!urlRegex.test(input.imagen)) {
+    errors.imagen = "formato invalido";
   }
 
   const vidaError = validateNumber(input.vida, "vida", 9999);
@@ -54,3 +60,5 @@ function validateNumber(inputNumber, name, max) {
     return "numero invalido";
   }
 }
+
+const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
