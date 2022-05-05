@@ -96,7 +96,7 @@ export default function Home() {
 
       <div className="pokemons">
         {paginatedPokemons.map((p) => (
-          <Pokemon nombre={p.nombre} imagen={p.imagen} tipos={p.tipos} key={p.id} />
+          <Pokemon nombre={p.nombre} imagen={p.imagen} tipos={p.tipos} key={p.id}  id={p.id}/>
         ))}
       </div>
       <Pagination

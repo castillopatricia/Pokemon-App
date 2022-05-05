@@ -1,4 +1,5 @@
-export function validate(input) {
+export function validate(input, nombreDisponible) {
+  console.log("🚀 ~ file: validations.js ~ line 2 ~ validate ~ nombreDisponible", nombreDisponible);
   let errors = {};
   if (!input.nombre) {
     errors.nombre = "Ingresar un nombre";
@@ -6,6 +7,8 @@ export function validate(input) {
     errors.nombre = "ingresar solo letras";
   } else if (input.nombre.length > 15) {
     errors.nombre = "ingresar menos de 15 caracteres";
+  } else if (nombreDisponible === false) {
+    errors.nombre = "nombre existente,no puede repetirse";
   }
 
   if (input.tipos.length === 0) {
@@ -61,4 +64,5 @@ function validateNumber(inputNumber, name, max) {
   }
 }
 
-const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
+const urlRegex =
+  /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;

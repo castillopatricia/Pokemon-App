@@ -5,11 +5,12 @@ import { postPokemon, getTypes } from "../actions";
 import { validate } from "../helpers/validations";
 import ValidateInput from "./ValidateInput";
 import ValidateSelect from "./ValidateSelect";
+import axios from "axios";
 
 export default function PokemonCreate() {
   const allTypes = useSelector((state) => state.types);
   const dispatch = useDispatch();
-
+  const [nombreDisponible, setNombreDisponible] = useState(true);
   const [input, setInput] = useState({
     nombre: "",
     tipos: [],
@@ -21,8 +22,7 @@ export default function PokemonCreate() {
     velocidad: "",
     fuerza: "",
   });
-  const errors = validate(input);
-
+  const errors = validate(input, nombreDisponible);
 
   useEffect(() => {
     dispatch(getTypes());
@@ -37,6 +37,11 @@ export default function PokemonCreate() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const { nombre, tipos, imagen, altura, peso, defensa, fuerza, velocidad } = errors;
+    if (nombre || tipos || imagen || altura || peso || defensa || fuerza || velocidad) {
+      return alert("no se puede crear el pokemon");
+    }
+
     dispatch(postPokemon(input));
     alert("pokemon creado");
   }
@@ -54,7 +59,14 @@ export default function PokemonCreate() {
       tipos: input.tipos.filter((t) => t !== tipo),
     });
   }
-
+  async function onBlurNombre() {
+    try {
+      var json = await axios.get("http://localhost:3001/pokemons?name=" + input.nombre);
+      setNombreDisponible(false);
+    } catch (error) {
+      setNombreDisponible(true);
+    }
+  }
   return (
     <div>
       <Link to="/home">
@@ -69,6 +81,7 @@ export default function PokemonCreate() {
           label="Nombre"
           error={errors.nombre}
           onChange={(e) => handleChange(e)}
+          onBlur={onBlurNombre}
         />
         <ValidateSelect
           allTypes={allTypes}
