@@ -1,5 +1,5 @@
 // import { filterByCreate, filterByTypes, orderByName, getPokemons, getTypes } from "../actions";
-import { filterPokemons, pokemonsOrder } from "../components/utils";
+import { filterPokemons, pokemonsOrder } from "./utils";
 
 const initialState = {
   pokemons: [],

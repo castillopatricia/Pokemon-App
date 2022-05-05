@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { postPokemon, getTypes } from "../actions";
+import { validate } from "../helpers/validations";
+import ValidateInput from "./ValidateInput";
+import ValidateSelect from "./ValidateSelect";
 
 export default function PokemonCreate() {
   const allTypes = useSelector((state) => state.types);
   const dispatch = useDispatch();
+
   const [input, setInput] = useState({
     nombre: "",
     tipos: [],
@@ -17,8 +21,10 @@ export default function PokemonCreate() {
     velocidad: "",
     fuerza: "",
   });
+  const errors = validate(input);
 
-  console.log("🚀 ~ file: PokemonCreate.jsx ~ line 10 ~ PokemonCreate ~ input", input);
+  console.log("🚀 ~ file: PokemonCreate.jsx ~ line 25 ~ PokemonCreate ~ errors", errors);
+
   useEffect(() => {
     dispatch(getTypes());
   }, [dispatch]);
@@ -57,53 +63,86 @@ export default function PokemonCreate() {
       </Link>
       <h1>Crear Pokemón</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div>
-          <label>Nombre:</label>
-          <input type="text" value={input.nombre} name="nombre" onChange={(e) => handleChange(e)} />
-        </div>
-        <div>
-          <label>Tipo:</label>
-          <select name="tipos" onChange={(e) => handleTypes(e)}>
-            {allTypes.map((t) => (
-              <option key={t.id}>{t.nombre}</option>
-            ))}
-          </select>
+        <ValidateInput
+          type="text"
+          value={input.nombre}
+          name="nombre"
+          label="Nombre"
+          error={errors.nombre}
+          onChange={(e) => handleChange(e)}
+        />
+        <ValidateSelect
+          allTypes={allTypes}
+          tipos={input.tipos}
+          name="tipos"
+          error={errors.tipos}
+          handleTypes={handleTypes}
+          handleRemove={handleRemove}
+        />
 
-          {input.tipos.map((t) => (
-            <button key={t} type="button" onClick={() => handleRemove(t)}>
-              {t} x
-            </button>
-          ))}
-        </div>
-        <div>
-          <label>Vida:</label>
-          <input type="number" value={input.vida} name="vida" onChange={(e) => handleChange(e)} />
-        </div>
+        <ValidateInput
+          type="number"
+          value={input.vida}
+          name="vida"
+          label="Vida"
+          error={errors.vida}
+          onChange={(e) => handleChange(e)}
+        />
 
-        <div>
-          <label>Peso:</label>
-          <input type="number" value={input.peso} name="peso" onChange={(e) => handleChange(e)} />
-        </div>
-        <div>
-          <label>Fuerza:</label>
-          <input type="number" value={input.fuerza} name="fuerza" onChange={(e) => handleChange(e)} />
-        </div>
-        <div>
-          <label>Velocidad:</label>
-          <input type="number" value={input.velocidad} name="velocidad" onChange={(e) => handleChange(e)} />
-        </div>
-        <div>
-          <label>Defensa:</label>
-          <input type="number" value={input.defensa} name="defensa" onChange={(e) => handleChange(e)} />
-        </div>
-        <div>
-          <label>Altura:</label>
-          <input type="number" value={input.altura} name="altura" onChange={(e) => handleChange(e)} />
-        </div>
-        <div>
-          <label>Imagen:</label>
-          <input type="text" value={input.imagen} name="imagen" onChange={(e) => handleChange(e)} />
-        </div>
+        <ValidateInput
+          type="number"
+          value={input.peso}
+          name="peso"
+          label="Peso"
+          error={errors.peso}
+          onChange={(e) => handleChange(e)}
+        />
+
+        <ValidateInput
+          type="number"
+          value={input.fuerza}
+          name="fuerza"
+          label="Fuerza"
+          error={errors.fuerza}
+          onChange={(e) => handleChange(e)}
+        />
+
+        <ValidateInput
+          type="number"
+          value={input.velocidad}
+          name="velocidad"
+          label="Velocidad"
+          error={errors.velocidad}
+          onChange={(e) => handleChange(e)}
+        />
+
+        <ValidateInput
+          type="number"
+          value={input.defensa}
+          name="defensa"
+          label="Defensa"
+          error={errors.defensa}
+          onChange={(e) => handleChange(e)}
+        />
+
+        <ValidateInput
+          type="number"
+          value={input.altura}
+          name="altura"
+          label="Altura"
+          error={errors.altura}
+          onChange={(e) => handleChange(e)}
+        />
+
+        <ValidateInput
+          type="text"
+          value={input.imagen}
+          name="imagen"
+          label="Imagen"
+          error={errors.imagen}
+          onChange={(e) => handleChange(e)}
+        />
+
         <button> crear</button>
       </form>
     </div>

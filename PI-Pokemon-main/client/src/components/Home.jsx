@@ -7,7 +7,7 @@ import Pokemon from "./Pokemon";
 import "./home.css";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
-import PokemonCreate from "./PokemonCreate";
+
 
 export default function Home() {
   const dispatch = useDispatch();
