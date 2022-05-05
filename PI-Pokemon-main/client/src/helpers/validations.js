@@ -1,5 +1,4 @@
 export function validate(input, nombreDisponible) {
-  console.log("🚀 ~ file: validations.js ~ line 2 ~ validate ~ nombreDisponible", nombreDisponible);
   let errors = {};
   if (!input.nombre) {
     errors.nombre = "Ingresar un nombre";
