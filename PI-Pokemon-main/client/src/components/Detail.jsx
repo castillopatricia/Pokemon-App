@@ -10,11 +10,9 @@ export default function Detail() {
 
   useEffect(() => {
     dispatch(getDetail(id));
-    console.log("🚀 ~ file: Detail.jsx ~ line 14 ~ useEffect ~ id", id);
   }, [dispatch, id]);
 
   const pokemon = useSelector((state) => state.pokemonDetail);
-  console.log("🚀 ~ file: Detail.jsx ~ line 18 ~ Detail ~ pokemon", pokemon);
 
   return (
     <div>

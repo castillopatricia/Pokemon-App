@@ -7,6 +7,7 @@ import ValidateInput from "./ValidateInput";
 import ValidateSelect from "./ValidateSelect";
 import axios from "axios";
 
+
 export default function PokemonCreate() {
   const allTypes = useSelector((state) => state.types);
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ export default function PokemonCreate() {
     }
   }
   return (
-    <div>
+    <div className="PokemonCreate">
       <Link to="/home">
         <button>volver</button>
       </Link>

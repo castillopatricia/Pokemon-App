@@ -1,0 +1,29 @@
+.card {
+  border: #1a6084;
+  border-radius: 5px;
+  background-color: #529c8b87;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 0 15px #041c30;
+  overflow: hidden;
+  text-align: center;
+  color: black;
+}
+.card:hover {
+  box-shadow: 0 12 16px #1a6084;
+  transform: translateY(-15px);
+}
+.tipo {
+  color: black;
+  font-size: 12px;
+  display: inline-block;
+  padding: 2px 5px;
+  font-family: "Permanent Marker", cursive;
+}
+.tipo:hover {
+  color: #1a6084;
+}
+.nombre {
+  font-family: "Permanent Marker", cursive;
+  font-size: 20px;
+}

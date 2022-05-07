@@ -1,0 +1,27 @@
+.paginado {
+  text-align: center;
+  margin-top: 190px;
+}
+
+.numeros {
+  font-size: 20px;
+  border-radius: 15%;
+  background-color: #70b57f;
+}
+.numeros:hover {
+  cursor: pointer;
+  color: black;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 60px #fff;
+}
+.boton {
+  font-size: 20px;
+  border-radius: 15%;
+  background-color: #e0e6a3d6;
+}
+.boton:hover {
+  cursor: pointer;
+  color: black;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 60px #fff;
+}

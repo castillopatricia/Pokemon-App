@@ -1,4 +1,5 @@
 import React from "react";
+import "./pagination.css";
 
 export default function Pagination({ currentPage, setCurrentPage, totalCount, pokemonsPerPage }) {
   const isFirstPage = currentPage === 1;
@@ -12,14 +13,16 @@ export default function Pagination({ currentPage, setCurrentPage, totalCount, po
   }
 
   return (
-    <div>
-      <button disabled={isFirstPage} onClick={() => setCurrentPage(currentPage - 1)}>
+    <div className="paginado">
+      <button className="boton" disabled={isFirstPage} onClick={() => setCurrentPage(currentPage - 1)}>
         anterior
       </button>
       {pageNumbers.map((p) => (
-        <button key={p} onClick={() => setCurrentPage(p)}>{p}</button>
+        <button className="numeros" key={p} onClick={() => setCurrentPage(p)}>
+          {p}
+        </button>
       ))}
-      <button disabled={isLastPage} onClick={() => setCurrentPage(currentPage + 1)}>
+      <button className="boton" disabled={isLastPage} onClick={() => setCurrentPage(currentPage + 1)}>
         siguiente
       </button>
     </div>

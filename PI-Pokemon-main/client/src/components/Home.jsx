@@ -7,7 +7,7 @@ import Pokemon from "./Pokemon";
 import "./home.css";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
-
+import "./pagination.css";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -55,18 +55,11 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <Link to="/home"> Ver Pokemon</Link>
-      <br />
-      <Link to="/create"> Crear Pokemon</Link>
-      <h1> Pagina principal de pokemons</h1>
-      <button
-        onClick={(e) => {
-          handleClick(e);
-        }}
-      >
-        cargar todos los pokemons
-      </button>
+    <div className="home">
+      <h1 className="title">Pokemon app:</h1>
+      <Link to="/create">
+        <button className="btn"> Crear un Pokemon</button>
+      </Link>
       <div>
         <SearchBar />
 
@@ -96,7 +89,7 @@ export default function Home() {
 
       <div className="pokemons">
         {paginatedPokemons.map((p) => (
-          <Pokemon nombre={p.nombre} imagen={p.imagen} tipos={p.tipos} key={p.id}  id={p.id}/>
+          <Pokemon nombre={p.nombre} imagen={p.imagen} tipos={p.tipos} key={p.id} id={p.id} />
         ))}
       </div>
       <Pagination
@@ -105,6 +98,10 @@ export default function Home() {
         totalCount={pokemons.length}
         pokemonsPerPage={pokemonsPerPage}
       />
+      <br />
+      <Link to="/" className="b">
+        volver al inicio
+      </Link>
     </div>
   );
 }
