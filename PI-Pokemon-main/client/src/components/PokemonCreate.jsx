@@ -6,7 +6,7 @@ import { validate } from "../helpers/validations";
 import ValidateInput from "./ValidateInput";
 import ValidateSelect from "./ValidateSelect";
 import axios from "axios";
-
+import "./pokemonCreate.css";
 
 export default function PokemonCreate() {
   const allTypes = useSelector((state) => state.types);
@@ -69,12 +69,12 @@ export default function PokemonCreate() {
     }
   }
   return (
-    <div className="PokemonCreate">
-      <Link to="/home">
-        <button>volver</button>
+    <div className="creacionPokemon">
+      <Link to="/home" className="btn">
+        volver
       </Link>
       <h1>Crear Pokemón</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form className="formulario" onSubmit={(e) => handleSubmit(e)}>
         <ValidateInput
           type="text"
           value={input.nombre}
@@ -156,7 +156,7 @@ export default function PokemonCreate() {
           onChange={(e) => handleChange(e)}
         />
 
-        <button> crear</button>
+        <button className="btn"> crear</button>
       </form>
     </div>
   );
