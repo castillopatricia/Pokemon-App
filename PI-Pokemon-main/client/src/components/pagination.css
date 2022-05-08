@@ -1,12 +1,13 @@
 .paginado {
   text-align: center;
-  margin-top: 190px;
+  margin-top: 50px;
+  margin-bottom: 100px;
 }
 
 .numeros {
   font-size: 20px;
   border-radius: 15%;
-  background-color: #70b57f;
+  background-color: #e0e6a3;
 }
 .numeros:hover {
   cursor: pointer;

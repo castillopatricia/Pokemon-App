@@ -4,7 +4,7 @@
   align-items: center;
   position: relative;
   max-width: 400px;
-  margin: 30px auto 0;
+  margin-left: auto;
 }
 
 .input {
@@ -42,31 +42,8 @@ input:hover {
 }
 .buscar {
   position: relative;
-  padding: 10px 10px;
-  margin: 0px 5px 5px 0px;
-  float: left;
-  border-radius: 3px;
-  font-size: 20px;
-  color: white;
-  text-decoration: none;
-  background-color: #70b57fcc;
-  border: none;
-  border-bottom: 2px solid #55a677;
-  text-shadow: 0px -2px white;
-  -webkit-transition: all 0.1s;
-  transition: all 0.1s;
-}
+  padding: 3px 10px;
+  margin: 5px 5px 5px 0px;
 
-.buscar:hover {
-  cursor: pointer;
-  background-color: #fff;
-  color: #55a677;
-  border: 2px solid #55a677;
-  box-shadow: 0 0 0 2px white(234 76 137 / 10%);
-}
-.buscar:active {
-  -webkit-transform: translate(0px, 5px);
-  -ms-transform: translate(0px, 5px);
-  transform: translate(0px, 5px);
-  border-bottom: 1px solid #2ecc71;
+  font-size: 20px;
 }

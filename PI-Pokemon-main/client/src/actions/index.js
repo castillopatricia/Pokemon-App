@@ -3,6 +3,7 @@ import axios from "axios";
 
 export function getPokemons() {
   return async function (dispatch) {
+    dispatch({ type: "POKEMONS_LOADING" });
     var json = await axios.get("http://localhost:3001/pokemons");
     return dispatch({
       type: "GET_POKEMONS",
@@ -65,6 +66,7 @@ export function getPokemonsByName(name) {
 }
 export function getDetail(id) {
   return async function (dispatch) {
+    dispatch({ type: "POKEMONS_LOADING" });
     var json = await axios.get("http://localhost:3001/pokemons/" + id);
     return dispatch({
       type: "GET_POKEMON_DETAIL",

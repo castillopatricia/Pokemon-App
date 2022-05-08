@@ -25,8 +25,8 @@ export default function SearchBar() {
         </g>
       </svg>
 
-      <input className="input " type="search" placeholder="search" onChange={(e) => handleInputChange(e)} />
-      <button className="buscar" type="submit" onClick={(e) => handleSubmit(e)}>
+      <input className="input" type="search" placeholder="search" onChange={(e) => handleInputChange(e)} />
+      <button className="btn buscar" type="submit" onClick={(e) => handleSubmit(e)}>
         buscar
       </button>
     </div>

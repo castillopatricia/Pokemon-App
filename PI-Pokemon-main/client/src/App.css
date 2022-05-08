@@ -1,1 +1,36 @@
+.btn {
+  position: relative;
+  padding: 10px 40px;
+  border-radius: 3px;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  background-color: #70b57fcc;
+  border: none;
+  border-bottom: 5px solid #55a677;
+  text-shadow: 0px -2px #27ae60;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+}
 
+.btn:hover {
+  box-shadow: inset 0 0 20px rgba(49, 138, 172, 0.5), 0 0 20px rgba(49, 138, 172, 0.4);
+  outline-color: rgba(49, 138, 172, 0);
+  outline-offset: 80px;
+  text-shadow: 1px 1px 6px #fff;
+}
+.btn:active {
+  -webkit-transform: translate(0px, 5px);
+  -ms-transform: translate(0px, 5px);
+  transform: translate(0px, 5px);
+  border-bottom: 1px solid #2ecc71;
+}
+
+select {
+  border: 3px solid #27ae60b8;
+  border-radius: 5px;
+  background-color: #e0e6a3c2;
+  color: #0d0c22;
+  padding: 5px 10px;
+  margin-right: 10px;
+}

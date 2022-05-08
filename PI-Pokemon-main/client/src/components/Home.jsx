@@ -7,12 +7,13 @@ import Pokemon from "./Pokemon";
 import "./home.css";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
-import "./pagination.css";
+import Loader from "./Loader";
 
 export default function Home() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
   const types = useSelector((state) => state.types);
+  const loading = useSelector((state) => state.loading);
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(12);
 
@@ -57,41 +58,52 @@ export default function Home() {
   return (
     <div className="home">
       <h1 className="title">Pokemon app:</h1>
-      <Link to="/create">
-        <button className="btn"> Crear un Pokemon</button>
-      </Link>
-      <div>
+
+      <div className="buttonBar">
+        <Link className="btn" to="/create">
+          Crear un Pokemon
+        </Link>
         <SearchBar />
+      </div>
+      <div>
+        <div className="filtrados">
+          <select onChange={(e) => handleForce(e)}>
+            <option value="">fuerza</option>
+            <option value="mayor">mayor fuerza</option>
+            <option value="menor">menor fuerza</option>
+          </select>
+          <select onChange={(e) => handleOrder(e)}>
+            <option value="">nombre</option>
+            <option value="asc">A - Z</option>
+            <option value="desc"> Z - A</option>
+          </select>
+          <select onChange={(e) => handleFilterByTypes(e)}>
+            <option value="All">todos los tipos</option>
 
-        <select onChange={(e) => handleForce(e)}>
-          <option value="">fuerza</option>
-          <option value="mayor">mayor fuerza</option>
-          <option value="menor">menor fuerza</option>
-        </select>
-        <select onChange={(e) => handleOrder(e)}>
-          <option value="">nombre</option>
-          <option value="asc">A - Z</option>
-          <option value="desc"> Z - A</option>
-        </select>
-        <select onChange={(e) => handleFilterByTypes(e)}>
-          <option value="All">todos los tipos</option>
+            {types.map((t) => (
+              <option key={t.id}>{t.nombre}</option>
+            ))}
+          </select>
+          <select onChange={(e) => handleFilterByCreate(e)}>
+            <option value="All">todos los pokemons</option>
+            <option value="created">creados en base de datos</option>
+            <option value="Api">de pokeApi</option>
+          </select>
+        </div>
 
-          {types.map((t) => (
-            <option key={t.id}>{t.nombre}</option>
-          ))}
-        </select>
-        <select onChange={(e) => handleFilterByCreate(e)}>
-          <option value="All">todos los pokemons</option>
-          <option value="created">creados en base de datos</option>
-          <option value="Api">de pokeApi</option>
-        </select>
+        <div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="pokemons">
+              {paginatedPokemons.map((p) => (
+                <Pokemon nombre={p.nombre} imagen={p.imagen} tipos={p.tipos} key={p.id} id={p.id} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="pokemons">
-        {paginatedPokemons.map((p) => (
-          <Pokemon nombre={p.nombre} imagen={p.imagen} tipos={p.tipos} key={p.id} id={p.id} />
-        ))}
-      </div>
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
