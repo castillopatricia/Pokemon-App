@@ -1,8 +1,8 @@
 .creacionPokemon {
   background-image: url(../assets/imagenform.jpg);
   background-size: cover;
-  width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  padding-bottom: 30px;
 }
 
 .formulario {
@@ -11,17 +11,24 @@
   flex-direction: column;
   justify-content: left;
   align-items: left;
-  width: 50%;
-  height: 50%;
-  margin: 0 50px 0 50px;
+  max-width: 500px;
+
+  margin: 30px;
   border-radius: 10px;
   border: 5px solid #060509;
-  padding: 15px;
+  padding: 20px;
+  padding-top: 35px;
+
   color: white;
   font-size: 20px;
 }
-.btn {
-  margin: 10px;
-  padding: 10px;
-  margin-top: 10px;
+.volver {
+  margin: 20px;
+  display: inline-block;
+}
+.tituloForm {
+  color: white;
+  font-size: 36px;
+  padding-left: 30px;
+  margin-top: 25px;
 }

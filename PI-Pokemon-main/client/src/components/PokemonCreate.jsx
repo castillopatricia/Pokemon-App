@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { postPokemon, getTypes } from "../actions";
+import { getTypes } from "../actions";
 import { validate } from "../helpers/validations";
 import ValidateInput from "./ValidateInput";
 import ValidateSelect from "./ValidateSelect";
 import axios from "axios";
 import "./pokemonCreate.css";
+import Loader from "./Loader";
 
 export default function PokemonCreate() {
   const allTypes = useSelector((state) => state.types);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [nombreDisponible, setNombreDisponible] = useState(true);
   const [input, setInput] = useState({
     nombre: "",
@@ -23,7 +25,8 @@ export default function PokemonCreate() {
     velocidad: "",
     fuerza: "",
   });
-  const errors = validate(input, nombreDisponible);
+  const [isValidated, setIsValidated] = useState(false);
+  const errors = validate(input, nombreDisponible, isValidated);
 
   useEffect(() => {
     dispatch(getTypes());
@@ -36,15 +39,63 @@ export default function PokemonCreate() {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const { nombre, tipos, imagen, altura, peso, defensa, fuerza, velocidad } = errors;
-    if (nombre || tipos || imagen || altura || peso || defensa || fuerza || velocidad) {
+    setIsValidated(true);
+
+    const errors = validate(input, nombreDisponible, true);
+    if (
+      errors.nombre ||
+      errors.tipos ||
+      errors.imagen ||
+      errors.altura ||
+      errors.peso ||
+      errors.defensa ||
+      errors.fuerza ||
+      errors.velocidad
+    ) {
       return alert("no se puede crear el pokemon");
     }
+    setLoading(true);
+    try {
+      await axios.get("http://localhost:3001/pokemons?name=" + input.nombre);
+      setNombreDisponible(false);
+      setLoading(false);
+      alert("no se puede crear el pokemon");
+      return;
+    } catch (error) {
+      setNombreDisponible(true);
+    }
 
-    dispatch(postPokemon(input));
-    alert("pokemon creado");
+    try {
+      await axios.post("http://localhost:3001/pokemons", input);
+
+      alert("pokemon creado");
+      setInput({
+        nombre: "",
+        tipos: [],
+        imagen: "",
+        vida: "",
+        peso: "",
+        altura: "",
+        defensa: "",
+        velocidad: "",
+        fuerza: "",
+      });
+      setIsValidated(false);
+    } catch (error) {
+      alert("pokemon  no puede ser creado");
+    }
+    setLoading(false);
+  }
+
+  function handleChangeName(e) {
+    e.preventDefault();
+    setNombreDisponible(true);
+    setInput({
+      ...input,
+      nombre: e.target.value,
+    });
   }
 
   function handleTypes(e) {
@@ -60,20 +111,14 @@ export default function PokemonCreate() {
       tipos: input.tipos.filter((t) => t !== tipo),
     });
   }
-  async function onBlurNombre() {
-    try {
-      var json = await axios.get("http://localhost:3001/pokemons?name=" + input.nombre);
-      setNombreDisponible(false);
-    } catch (error) {
-      setNombreDisponible(true);
-    }
-  }
+
   return (
     <div className="creacionPokemon">
-      <Link to="/home" className="btn">
+      <Link to="/home" className="btn volver">
         volver
       </Link>
-      <h1>Crear Pokemón</h1>
+      <h1 className="tituloForm">Crea un Pokemón</h1>
+
       <form className="formulario" onSubmit={(e) => handleSubmit(e)}>
         <ValidateInput
           type="text"
@@ -81,8 +126,7 @@ export default function PokemonCreate() {
           name="nombre"
           label="Nombre"
           error={errors.nombre}
-          onChange={(e) => handleChange(e)}
-          onBlur={onBlurNombre}
+          onChange={(e) => handleChangeName(e)}
         />
         <ValidateSelect
           allTypes={allTypes}
@@ -157,6 +201,7 @@ export default function PokemonCreate() {
         />
 
         <button className="btn"> crear</button>
+        {loading && <Loader />}
       </form>
     </div>
   );

@@ -1,0 +1,33 @@
+.fondoPagina {
+  background-image: url(../assets/pokemon-first-generation-pokemon-wallpaper-preview.jpg);
+  background-size: cover;
+  text-align: center;
+
+  min-height: 100vh;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.detalle {
+  background-color: rgba(39, 35, 35, 0.768);
+  border: 3px solid black;
+  margin: auto;
+  margin-bottom: 30px;
+  padding: 20px;
+  font-size: 20px;
+  color: white;
+  display: inline-flex;
+  flex-direction: column;
+  align-items:flex-start;
+  /* max-width: 500px; */
+}
+.btn-volver {
+  background-color: #4caf50;
+  color: white;
+  margin-top: 50px;
+}
+.propiedades {
+  font-size: 25px;
+  font-family: "Times New Roman", Times, serif;
+  color:rgb(77, 237, 226)
+}

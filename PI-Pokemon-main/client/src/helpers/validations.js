@@ -1,5 +1,8 @@
-export function validate(input, nombreDisponible) {
+export function validate(input, nombreDisponible, isValidated) {
   let errors = {};
+  if (!isValidated) {
+    return errors;
+  }
   if (!input.nombre) {
     errors.nombre = "Ingresar un nombre";
   } else if (!/^[a-zA-Z]+$/g.test(input.nombre)) {
@@ -12,7 +15,7 @@ export function validate(input, nombreDisponible) {
 
   if (input.tipos.length === 0) {
     errors.tipos = "ingresar un tipo de pokemon";
-  } else if (input.tipos.length > 1) {
+  } else if (input.tipos.length > 2) {
     errors.tipos = "solo se pueden ingresar 2 tipos";
   }
 
@@ -53,7 +56,7 @@ export function validate(input, nombreDisponible) {
 
 function validateNumber(inputNumber, name, max) {
   if (!inputNumber) {
-    return "ingresar" + " " + name;
+    return "ingresar " + name;
   } else if (inputNumber != parseInt(inputNumber)) {
     return " el valor ingresado debe ser un numero";
   } else if (parseInt(inputNumber) < 0) {
@@ -64,4 +67,4 @@ function validateNumber(inputNumber, name, max) {
 }
 
 const urlRegex =
-  /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+  /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)/;

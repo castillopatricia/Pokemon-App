@@ -25,12 +25,13 @@ router.get("/pokemons", async (req, res) => {
             attributes: [],
           },
         },
-        attributes: ["nombre", "id", "createdInDb", "fuerza"],
+        attributes: ["nombre", "id", "createdInDb", "fuerza", "imagen"],
       });
       if (pokemonDb) {
         res.send(pokemonDb);
       } else {
         let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+
         let pokemon = {
           nombre: response.data.name,
           imagen: response.data.sprites.other["official-artwork"].front_default,
@@ -39,7 +40,6 @@ router.get("/pokemons", async (req, res) => {
           fuerza: response.data.stats[1].base_stat,
         };
         res.send(pokemon);
-        console.log("🚀 ~ file: index.js ~ line 42 ~ router.get ~ pokemon", pokemon)
       }
     } catch (error) {
       res.status(404).send("No se encontró el pokemon ingresado");
@@ -53,15 +53,27 @@ router.get("/pokemons", async (req, res) => {
 router.get("/pokemons/:idPokemon", async (req, res) => {
   try {
     const { idPokemon } = req.params;
-    if (isNaN(idPokemon)) {
-      const pokemonFound = await Pokemon.findByPk(idPokemon);
+    if (idPokemon.includes("db")) {
+      const idNumber = idPokemon.split("db");
+      const pokemonFound = await Pokemon.findByPk(idNumber[1], {
+        include: {
+          model: Tipo,
+          attributes: ["nombre", "id"],
+          through: {
+            attributes: [],
+          },
+        },
+      });
       return res.send(pokemonFound);
     } else {
+      if (isNaN(idPokemon)) {
+        return res.status(400).send("no es un id valido");
+      }
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idPokemon}`);
       const pokemondetail = {
         nombre: response.data.name,
         imagen: response.data.sprites.other["official-artwork"].front_default,
-        tipo: response.data.types.map((el) => el.type.name),
+        tipos: response.data.types.map((el) => ({ nombre: el.type.name })),
         vida: response.data.stats[0].base_stat,
         peso: response.data.weight,
         altura: response.data.height,
@@ -82,9 +94,38 @@ router.post("/pokemons", async (req, res) => {
     return res.status(404).send("No se puede crear el pokemon");
   }
   try {
+    let pokemonFound = await Pokemon.findOne({
+      where: {
+        nombre: nombre,
+      },
+    });
+    if (pokemonFound) {
+      return res.status(400).send("el pokemon ya existe");
+    }
+    try {
+      let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nombre}`);
+      if (response.data) {
+        return res.status(400).send("el pokemon ya existe");
+      }
+    } catch (error) {}
+    let tipos = req.body.tipos;
+    if (tipos) {
+      for (let i = 0; i < tipos.length; i++) {
+        const tipo = tipos[i];
+        const result = await Tipo.findOne({
+          where: {
+            nombre: tipo,
+          },
+        });
+        if (!result) {
+          return res.status(400).send(`el tipo ${tipo} no existe`);
+        }
+      }
+    }
     const pokemonCreated = await Pokemon.create(req.body);
     // addTipos crea la asociacion de tablas.
     // Se debería validar antes de crear el pokemon, si recibe tipos que estos existan en la db, y que no esten repetidos.
+
     await pokemonCreated.addTipos(req.body.tipos);
     res.send(pokemonCreated);
   } catch (error) {
@@ -125,4 +166,4 @@ module.exports = router;
 //   }
 //   res.send(resultados);
 
-///[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.test(id)
+///[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.test(i

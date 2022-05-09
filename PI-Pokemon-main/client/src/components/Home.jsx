@@ -12,6 +12,7 @@ import Loader from "./Loader";
 export default function Home() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
+  console.log("🚀 ~ file: Home.jsx ~ line 15 ~ Home ~ pokemons", pokemons);
   const types = useSelector((state) => state.types);
   const loading = useSelector((state) => state.loading);
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,11 +22,6 @@ export default function Home() {
     dispatch(getTypes());
     dispatch(getPokemons());
   }, [dispatch]);
-
-  function handleClick(e) {
-    e.preventDefault();
-    dispatch(getPokemons());
-  }
 
   function paginate() {
     const indexOfLastPokemon = currentPage * pokemonsPerPage;
@@ -97,7 +93,14 @@ export default function Home() {
           ) : (
             <div className="pokemons">
               {paginatedPokemons.map((p) => (
-                <Pokemon nombre={p.nombre} imagen={p.imagen} tipos={p.tipos} key={p.id} id={p.id} />
+                <Pokemon
+                  nombre={p.nombre}
+                  imagen={p.imagen}
+                  tipos={p.tipos}
+                  key={p.id}
+                  id={p.id}
+                  createdInDb={p.createdInDb}
+                />
               ))}
             </div>
           )}

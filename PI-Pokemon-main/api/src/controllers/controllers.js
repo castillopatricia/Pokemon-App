@@ -11,7 +11,7 @@ const getApiInfo = async () => {
     return {
       nombre: response.data.name,
       imagen: response.data.sprites.other["official-artwork"].front_default,
-      tipos: response.data.types.map((el) => ({nombre: el.type.name})),
+      tipos: response.data.types.map((el) => ({ nombre: el.type.name })),
       id: response.data.id,
       fuerza: response.data.stats[1].base_stat,
     };
@@ -22,13 +22,13 @@ const getDbInfo = async () => {
   return await Pokemon.findAll({
     include: {
       model: Tipo,
-      attributes: ["nombre", "id",],
+      attributes: ["nombre", "id"],
       through: {
         attributes: [],
       },
     },
     // Aquí se seleccionan las propiedades a traer de las filas de pokemons
-    attributes: ["nombre", "id", "createdInDb","fuerza"],
+    attributes: ["nombre", "id", "createdInDb", "fuerza", "imagen"],
   });
 };
 const getAllPokemons = async () => {

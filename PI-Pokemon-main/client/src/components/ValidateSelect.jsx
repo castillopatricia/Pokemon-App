@@ -1,8 +1,13 @@
+
+import "./validateSelect.css";
+
+
 export default function ValidateSelect({ tipos, name, allTypes, handleRemove, handleTypes, error }) {
+
   return (
     <div>
       <label>Tipo:</label>
-      <select disabled={tipos[1]} name={name} onChange={(e) => handleTypes(e)}>
+      <select className="selectTipos" disabled={tipos[1]} name={name} onChange={(e) => handleTypes(e)}>
         {allTypes.map((t) => (
           <option key={t.id}>{t.nombre}</option>
         ))}
@@ -13,7 +18,7 @@ export default function ValidateSelect({ tipos, name, allTypes, handleRemove, ha
           {t} x
         </button>
       ))}
-      <div>{error}</div>
+      <div className="errors">{error}</div>
     </div>
   );
 }
