@@ -1,4 +1,4 @@
-// import { filterByCreate, filterByTypes, orderByName, getPokemons, getTypes } from "../actions";
+
 import { filterPokemons, pokemonsOrder } from "./utils";
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
   filteredByType: "All",
   orderedPokemonsByName: "",
   orderedPokemonsByForce: "",
-  pokemonDetail: {},
+  pokemonDetail: {}, 
   loading: true,
 };
 

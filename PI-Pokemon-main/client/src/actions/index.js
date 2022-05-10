@@ -1,5 +1,5 @@
 import axios from "axios";
-// import { bindActionCreators } from "redux";
+
 
 export function getPokemons() {
   return async function (dispatch) {
