@@ -1,4 +1,5 @@
 export function validate(input, nombreDisponible, isValidated) {
+  console.log("🚀 ~ file: validations.js ~ line 2 ~ validate ~ isValidated", isValidated)
   let errors = {};
   if (!isValidated) {
     return errors;

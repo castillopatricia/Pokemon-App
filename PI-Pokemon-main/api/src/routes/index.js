@@ -6,9 +6,7 @@ const { Pokemon, Tipo } = require("../db");
 const { getAllPokemons } = require("../controllers/controllers");
 const router = Router();
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
-// funciones controladoras:
+//  rutas y funciones controladoras:
 router.get("/pokemons", async (req, res) => {
   const { name } = req.query;
 
@@ -151,22 +149,3 @@ router.get("/types", async (req, res) => {
   res.json(todosLosTipos);
 });
 module.exports = router;
-
-//router.get("/types", async (req, res) => {
-//findall de tipo, si devuelve array vacio, consultar a la api y crear los tipos.
-//   const resultados = await Tipo.findAll();
-//   if (resultados.length === 0) {
-//     const typesApi = await axios.get("https://pokeapi.co/api/v2/type");
-
-//     const types = typesApi.data.results.map((el) => {
-//       return el.name;
-//     });
-//     for (let i = 0; i < types.length; i++) {
-//       let nombre = types[i];
-//       const result = await Tipo.create({ nombre: nombre });
-//       resultados.push(result);
-//     }
-//   }
-//   res.send(resultados);
-
-///[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/.test(i
