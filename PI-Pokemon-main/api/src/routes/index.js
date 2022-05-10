@@ -1,6 +1,5 @@
 const { Router } = require("express");
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
+
 const axios = require("axios");
 const { Pokemon, Tipo } = require("../db");
 const { getAllPokemons } = require("../controllers/controllers");
@@ -124,8 +123,6 @@ router.post("/pokemons", async (req, res) => {
       }
     }
     const pokemonCreated = await Pokemon.create(req.body);
-    // addTipos crea la asociacion de tablas.
-    // Se debería validar antes de crear el pokemon, si recibe tipos que estos existan en la db, y que no esten repetidos.
 
     await pokemonCreated.addTipos(req.body.tipos);
     res.send(pokemonCreated);
