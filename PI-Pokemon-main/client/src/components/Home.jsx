@@ -12,7 +12,6 @@ import Loader from "./Loader";
 export default function Home() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
-  console.log("🚀 ~ file: Home.jsx ~ line 15 ~ Home ~ pokemons", pokemons);
   const types = useSelector((state) => state.types);
   const loading = useSelector((state) => state.loading);
   const [currentPage, setCurrentPage] = useState(1);

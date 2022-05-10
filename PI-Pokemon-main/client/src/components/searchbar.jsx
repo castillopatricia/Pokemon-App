@@ -14,6 +14,7 @@ export default function SearchBar() {
   }
   function handleSubmit(e) {
     e.preventDefault();
+
     if (!namePokemon) {
       return alert("ingresa un nombre de pokemon");
     }

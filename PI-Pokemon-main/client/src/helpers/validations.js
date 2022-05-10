@@ -5,7 +5,7 @@ export function validate(input, nombreDisponible, isValidated) {
   }
   if (!input.nombre) {
     errors.nombre = "Ingresar un nombre";
-  } else if (!/^[a-zA-Z]+$/g.test(input.nombre)) {
+  } else if (!/^[a-z]+$/g.test(input.nombre)) {
     errors.nombre = "ingresar solo letras";
   } else if (input.nombre.length > 15) {
     errors.nombre = "ingresar menos de 15 caracteres";
@@ -58,7 +58,7 @@ function validateNumber(inputNumber, name, max) {
   if (!inputNumber) {
     return "ingresar " + name;
   } else if (inputNumber != parseInt(inputNumber)) {
-    return " el valor ingresado debe ser un numero";
+    return " el valor ingresado debe ser un numero entero";
   } else if (parseInt(inputNumber) < 0) {
     return "no es un numero valido";
   } else if (inputNumber > max) {

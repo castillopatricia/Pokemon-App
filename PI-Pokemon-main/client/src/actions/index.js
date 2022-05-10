@@ -72,3 +72,14 @@ export function getDetail(id) {
     });
   };
 }
+
+ //action con promesas
+//export function fetchPost(valor){
+  //return function (dispatch){
+    // dispatch(getPost())
+    //axios.get(`https://jsonplaceholder.typecode.com/todos/${valor}`)
+   // .then(r=>r.data)
+   //.then(d=>dispatch(receivePost(d)))
+   //.catch(e=>console.log(e))
+//  }
+//}

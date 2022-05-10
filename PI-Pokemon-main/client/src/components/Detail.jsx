@@ -34,7 +34,9 @@ export default function Detail() {
           <h4>
             <span className="propiedades">tipos: </span>
             {pokemon.tipos?.map((tipo) => (
-              <span key={tipo.nombre} className={`tipo ${tipo.nombre}`}>{tipo.nombre}</span>
+              <span key={tipo.nombre} className={`tipo ${tipo.nombre}`}>
+                {tipo.nombre}
+              </span>
             ))}
           </h4>
           <h4>

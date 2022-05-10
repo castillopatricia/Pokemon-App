@@ -13,10 +13,11 @@ router.get("/pokemons", async (req, res) => {
   const { name } = req.query;
 
   if (name) {
+    let nombreQuery = name.toLowerCase();
     try {
       let pokemonDb = await Pokemon.findOne({
         where: {
-          nombre: name,
+          nombre: nombreQuery,
         },
         include: {
           model: Tipo,
@@ -30,7 +31,7 @@ router.get("/pokemons", async (req, res) => {
       if (pokemonDb) {
         res.send(pokemonDb);
       } else {
-        let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nombreQuery}`);
 
         let pokemon = {
           nombre: response.data.name,
@@ -90,9 +91,11 @@ router.get("/pokemons/:idPokemon", async (req, res) => {
 });
 router.post("/pokemons", async (req, res) => {
   const { nombre } = req.body;
+
   if (!nombre) {
     return res.status(404).send("No se puede crear el pokemon");
   }
+
   try {
     let pokemonFound = await Pokemon.findOne({
       where: {
