@@ -66,5 +66,4 @@ function validateNumber(inputNumber, name, max) {
   }
 }
 
-const urlRegex =
-  /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+const urlRegex =/(https?:\/\/.*\.(?:png|gif|webp|jpeg|jpg|svg))/i
