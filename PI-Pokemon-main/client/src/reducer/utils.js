@@ -1,24 +1,27 @@
-export function filterPokemons(allPokemons, filteredByCreate, filteredByTypes) {
-  let pokemonsFilterByCreate;
+export function filterPokemons(allPokemons, filteredByCreate, filteredByTypes, filteredByWeight) {
+  let pokemonsFilter;
 
   if (filteredByCreate === "All") {
-    pokemonsFilterByCreate = allPokemons;
+    pokemonsFilter = allPokemons;
   } else {
-    pokemonsFilterByCreate =
+    pokemonsFilter =
       filteredByCreate === "created"
         ? allPokemons.filter((p) => p.createdInDb === true) // booleano
         : allPokemons.filter((p) => !p.createdInDb);
   }
 
-  let pokemonsFilterByType;
-
-  if (filteredByTypes === "All") {
-    pokemonsFilterByType = pokemonsFilterByCreate;
-  } else {
-    pokemonsFilterByType = pokemonsFilterByCreate.filter((p) => p.tipos.find((t) => t.nombre === filteredByTypes));
+  if (filteredByTypes !== "All") {
+    pokemonsFilter = pokemonsFilter.filter((p) => p.tipos.find((t) => t.nombre === filteredByTypes));
   }
 
-  return pokemonsFilterByType;
+  if (filteredByWeight === "high") {
+    pokemonsFilter = pokemonsFilter.filter((p) => p.peso >= 1000);
+  }
+  if (filteredByWeight === "low") {
+    pokemonsFilter = pokemonsFilter.filter((p) => p.peso < 1000);
+  }
+
+  return pokemonsFilter;
 }
 export function pokemonsOrder(pokemonsArr, orderedPokemonsByName, orderedPokemonsByForce) {
   let pokemons = [...pokemonsArr];

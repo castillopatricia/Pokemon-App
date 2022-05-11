@@ -35,7 +35,12 @@ export function filterByCreate(payload) {
     payload: payload,
   };
 }
-
+export function filterByWeight(payload){
+  return{
+    type:'FILTER_BY_WEIGHT',
+    payload
+  }
+}
 export function orderByName(payload) {
   return {
     type: "ORDER_BY_NAME",
@@ -71,6 +76,7 @@ export function getDetail(id) {
       payload: json.data,
     });
   };
+
 }
 
  //action con promesas

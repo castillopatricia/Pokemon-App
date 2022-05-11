@@ -1,4 +1,3 @@
-
 import { filterPokemons, pokemonsOrder } from "./utils";
 
 const initialState = {
@@ -8,9 +7,10 @@ const initialState = {
   allTypes: [],
   filteredByCreate: "All",
   filteredByType: "All",
+  filterByWeight: "All",
   orderedPokemonsByName: "",
   orderedPokemonsByForce: "",
-  pokemonDetail: {}, 
+  pokemonDetail: {},
   loading: true,
 };
 
@@ -53,7 +53,19 @@ function rootReducer(state = initialState, action) {
         filteredByCreate: action.payload,
       };
     }
-
+    case "FILTER_BY_WEIGHT": {
+      let pokemonsFilter = filterPokemons(
+        state.allPokemons,
+        state.filteredByCreate,
+        state.filteredByType,
+        action.payload
+      );
+      return {
+        ...state,
+        pokemons: pokemonsFilter,
+        filterByWeight: action.payload,
+      };
+    }
     case "ORDER_BY_NAME": {
       let pokemonsFilter = filterPokemons(state.allPokemons, state.filteredByCreate, state.filteredByType);
       let orderedPokemons = pokemonsOrder(pokemonsFilter, action.payload, state.orderedPokemonsByForce);
@@ -75,6 +87,7 @@ function rootReducer(state = initialState, action) {
     case "GET_POKEMONS_BY_NAME":
       return {
         ...state,
+
         pokemons: [action.payload],
       };
 

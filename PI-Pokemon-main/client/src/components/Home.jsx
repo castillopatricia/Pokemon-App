@@ -1,7 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemons, getTypes, filterByTypes, filterByCreate, orderByName, orderByForce } from "../actions";
+import {
+  filterByWeight,
+  getPokemons,
+  getTypes,
+  filterByTypes,
+  filterByCreate,
+  orderByName,
+  orderByForce,
+} from "../actions";
 import { Link } from "react-router-dom";
 import Pokemon from "./Pokemon";
 import "./home.css";
@@ -20,7 +28,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getTypes());
     dispatch(getPokemons());
-  }, []);
+  }, [dispatch]);
 
   function paginate() {
     const indexOfLastPokemon = currentPage * pokemonsPerPage;
@@ -49,11 +57,15 @@ export default function Home() {
     setCurrentPage(1);
     dispatch(orderByForce(e.target.value));
   }
+  function handleFilterByweight(e) {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(filterByWeight(e.target.value));
+  }
 
   return (
     <div className="home">
       <h1 className="title">Pokemon app:</h1>
-
       <div className="buttonBar">
         <Link className="btn" to="/create">
           Crear un Pokemon
@@ -84,6 +96,11 @@ export default function Home() {
             <option value="created">creados en base de datos</option>
             <option value="Api">de pokeApi</option>
           </select>
+          <select onChange={(e) => handleFilterByweight(e)}>
+            <option value="All">todos los pesos</option>
+            <option value="high">mayor peso</option>
+            <option value="low">menor peso</option>
+          </select>
         </div>
 
         <div>
@@ -105,7 +122,6 @@ export default function Home() {
           )}
         </div>
       </div>
-
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}

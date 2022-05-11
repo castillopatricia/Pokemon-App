@@ -23,7 +23,7 @@ router.get("/pokemons", async (req, res) => {
             attributes: [],
           },
         },
-        attributes: ["nombre", "id", "createdInDb", "fuerza", "imagen"],
+        attributes: ["nombre", "id", "createdInDb", "fuerza", "imagen",'peso'],
       });
       if (pokemonDb) {
         res.send(pokemonDb);
