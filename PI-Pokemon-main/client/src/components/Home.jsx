@@ -20,7 +20,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getTypes());
     dispatch(getPokemons());
-  }, [dispatch]);
+  }, []);
 
   function paginate() {
     const indexOfLastPokemon = currentPage * pokemonsPerPage;

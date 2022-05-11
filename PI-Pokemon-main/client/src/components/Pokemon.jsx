@@ -2,11 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./pokemon.css";
 
-export default function Pokemon({ nombre, tipos, imagen, id, createdInDb }) {
-  let idPokemon = id;
-  if (createdInDb) {
-    idPokemon = "db" + id;
-  }
+export default function Pokemon({ nombre, tipos, imagen, id }) {
   return (
     <div className="cardAnimation">
       <div className="card">
@@ -19,7 +15,7 @@ export default function Pokemon({ nombre, tipos, imagen, id, createdInDb }) {
           ))}
         </h5>
 
-        <Link to={`/pokemon/${idPokemon}`}>
+        <Link to={`/pokemon/${id}`}>
           <img src={imagen} alt={nombre} />
         </Link>
       </div>

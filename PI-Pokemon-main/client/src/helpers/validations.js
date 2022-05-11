@@ -1,5 +1,4 @@
 export function validate(input, nombreDisponible, isValidated) {
-  console.log("🚀 ~ file: validations.js ~ line 2 ~ validate ~ isValidated", isValidated)
   let errors = {};
   if (!isValidated) {
     return errors;
@@ -7,7 +6,7 @@ export function validate(input, nombreDisponible, isValidated) {
   if (!input.nombre) {
     errors.nombre = "Ingresar un nombre";
   } else if (!/^[a-z]+$/g.test(input.nombre)) {
-    errors.nombre = "ingresar solo letras";
+    errors.nombre = "ingresar solo letras minusculas";
   } else if (input.nombre.length > 15) {
     errors.nombre = "ingresar menos de 15 caracteres";
   } else if (nombreDisponible === false) {

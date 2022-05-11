@@ -27,7 +27,7 @@ const getDbInfo = async () => {
         attributes: [],
       },
     },
-    // Aquí se seleccionan las propiedades a traer de las filas de pokemons
+
     attributes: ["nombre", "id", "createdInDb", "fuerza", "imagen"],
   });
 };

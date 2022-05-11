@@ -7,6 +7,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
     },
+    id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
     vida: { type: DataTypes.INTEGER },
     fuerza: { type: DataTypes.INTEGER },
     imagen: { type: DataTypes.STRING },

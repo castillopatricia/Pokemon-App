@@ -51,9 +51,8 @@ router.get("/pokemons", async (req, res) => {
 router.get("/pokemons/:idPokemon", async (req, res) => {
   try {
     const { idPokemon } = req.params;
-    if (idPokemon.includes("db")) {
-      const idNumber = idPokemon.split("db");
-      const pokemonFound = await Pokemon.findByPk(idNumber[1], {
+    if (isNaN(idPokemon)) {
+      const pokemonFound = await Pokemon.findByPk(idPokemon, {
         include: {
           model: Tipo,
           attributes: ["nombre", "id"],
@@ -62,11 +61,12 @@ router.get("/pokemons/:idPokemon", async (req, res) => {
           },
         },
       });
-      return res.send(pokemonFound);
-    } else {
-      if (isNaN(idPokemon)) {
-        return res.status(400).send("no es un id valido");
+      if (pokemonFound) {
+        return res.send(pokemonFound);
+      } else {
+        res.status(404).send("No se encontró el pokemon ingresado");
       }
+    } else {
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idPokemon}`);
       const pokemondetail = {
         nombre: response.data.name,
@@ -91,6 +91,9 @@ router.post("/pokemons", async (req, res) => {
 
   if (!nombre) {
     return res.status(404).send("No se puede crear el pokemon");
+  } 
+  if (!/^[a-z]+$/g.test(nombre)) {
+    return res.status(404).send("El nombre del pokemon debe estar en minúsculas");
   }
 
   try {
@@ -102,6 +105,7 @@ router.post("/pokemons", async (req, res) => {
     if (pokemonFound) {
       return res.status(400).send("el pokemon ya existe");
     }
+
     try {
       let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nombre}`);
       if (response.data) {
@@ -109,6 +113,7 @@ router.post("/pokemons", async (req, res) => {
       }
     } catch (error) {}
     let tipos = req.body.tipos;
+
     if (tipos) {
       for (let i = 0; i < tipos.length; i++) {
         const tipo = tipos[i];
