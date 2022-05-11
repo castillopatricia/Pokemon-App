@@ -14,7 +14,6 @@ const getApiInfo = async () => {
       tipos: response.data.types.map((el) => ({ nombre: el.type.name })),
       id: response.data.id,
       fuerza: response.data.stats[1].base_stat,
-      peso:response.data.weight
     };
   });
   return pokemons;
@@ -29,7 +28,7 @@ const getDbInfo = async () => {
       },
     },
 
-    attributes: ["nombre", "id", "createdInDb", "fuerza", "imagen",'peso'],
+    attributes: ["nombre", "id", "createdInDb", "fuerza", "imagen"],
   });
 };
 const getAllPokemons = async () => {

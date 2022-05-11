@@ -1,15 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  filterByWeight,
-  getPokemons,
-  getTypes,
-  filterByTypes,
-  filterByCreate,
-  orderByName,
-  orderByForce,
-} from "../actions";
+import { getPokemons, getTypes, filterByTypes, filterByCreate, orderByName, orderByForce } from "../actions";
 import { Link } from "react-router-dom";
 import Pokemon from "./Pokemon";
 import "./home.css";
@@ -57,11 +49,6 @@ export default function Home() {
     setCurrentPage(1);
     dispatch(orderByForce(e.target.value));
   }
-  function handleFilterByweight(e) {
-    e.preventDefault();
-    setCurrentPage(1);
-    dispatch(filterByWeight(e.target.value));
-  }
 
   return (
     <div className="home">
@@ -95,11 +82,6 @@ export default function Home() {
             <option value="All">todos los pokemons</option>
             <option value="created">creados en base de datos</option>
             <option value="Api">de pokeApi</option>
-          </select>
-          <select onChange={(e) => handleFilterByweight(e)}>
-            <option value="All">todos los pesos</option>
-            <option value="high">mayor peso</option>
-            <option value="low">menor peso</option>
           </select>
         </div>
 

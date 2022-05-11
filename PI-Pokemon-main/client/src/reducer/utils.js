@@ -17,9 +17,6 @@ export function filterPokemons(allPokemons, filteredByCreate, filteredByTypes, f
   if (filteredByWeight === "high") {
     pokemonsFilter = pokemonsFilter.filter((p) => p.peso >= 1000);
   }
-  if (filteredByWeight === "low") {
-    pokemonsFilter = pokemonsFilter.filter((p) => p.peso < 1000);
-  }
 
   return pokemonsFilter;
 }
