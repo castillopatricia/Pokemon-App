@@ -14,10 +14,6 @@ export function filterPokemons(allPokemons, filteredByCreate, filteredByTypes, f
     pokemonsFilter = pokemonsFilter.filter((p) => p.tipos.find((t) => t.nombre === filteredByTypes));
   }
 
-  if (filteredByWeight === "high") {
-    pokemonsFilter = pokemonsFilter.filter((p) => p.peso >= 1000);
-  }
-
   return pokemonsFilter;
 }
 export function pokemonsOrder(pokemonsArr, orderedPokemonsByName, orderedPokemonsByForce) {
