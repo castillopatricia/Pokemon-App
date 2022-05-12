@@ -11,7 +11,7 @@ export default function Detail() {
   const { id } = useParams();
   const loading = useSelector((state) => state.loading);
   const history = useHistory();
-  
+
   useEffect(() => {
     dispatch(getDetail(id));
   }, [dispatch, id]);

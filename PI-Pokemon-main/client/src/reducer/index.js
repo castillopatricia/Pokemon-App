@@ -83,6 +83,7 @@ function rootReducer(state = initialState, action) {
         pokemonDetail: action.payload,
         loading: false,
       };
+    
     default:
       return { ...state };
   }
