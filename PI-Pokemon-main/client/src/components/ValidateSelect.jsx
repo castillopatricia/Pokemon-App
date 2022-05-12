@@ -3,6 +3,7 @@ import "./validateSelect.css";
 
 
 export default function ValidateSelect({ tipos, name, allTypes, handleRemove, handleTypes, error }) {
+console.log("🚀 ~ file: ValidateSelect.jsx ~ line 6 ~ ValidateSelect ~ error", error)
 
   return (
     <div>

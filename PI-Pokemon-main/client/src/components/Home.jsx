@@ -98,6 +98,7 @@ export default function Home() {
                   key={p.id}
                   id={p.id}
                   createdInDb={p.createdInDb}
+                 
                 />
               ))}
             </div>

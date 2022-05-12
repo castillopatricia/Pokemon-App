@@ -18,6 +18,8 @@ const getApiInfo = async () => {
   });
   return pokemons;
 };
+
+
 const getDbInfo = async () => {
   return await Pokemon.findAll({
     include: {
@@ -31,6 +33,8 @@ const getDbInfo = async () => {
     attributes: ["nombre", "id", "createdInDb", "fuerza", "imagen"],
   });
 };
+
+
 const getAllPokemons = async () => {
   const apiInfo = await getApiInfo();
   const dbInfo = await getDbInfo();

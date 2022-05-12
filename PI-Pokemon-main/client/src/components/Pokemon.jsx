@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./pokemon.css";
 
-export default function Pokemon({ nombre, tipos, imagen, id }) {
+export default function Pokemon({ nombre, tipos, imagen, id}) {
   return (
     <div className="cardAnimation">
       <div className="card">

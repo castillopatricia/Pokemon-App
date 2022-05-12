@@ -5,8 +5,6 @@ const { Pokemon, Tipo } = require("../db");
 const { getAllPokemons } = require("../controllers/controllers");
 const router = Router();
 
-
-
 //ruta get pokemons:
 
 router.get("/pokemons", async (req, res) => {
@@ -51,7 +49,6 @@ router.get("/pokemons", async (req, res) => {
   }
 });
 
-
 // ruta get con id por params
 
 router.get("/pokemons/:idPokemon", async (req, res) => {
@@ -93,7 +90,6 @@ router.get("/pokemons/:idPokemon", async (req, res) => {
   }
 });
 
-
 //RUTA POST:
 
 router.post("/pokemons", async (req, res) => {
@@ -101,7 +97,7 @@ router.post("/pokemons", async (req, res) => {
 
   if (!nombre) {
     return res.status(404).send("No se puede crear el pokemon");
-  } 
+  }
   if (!/^[a-z]+$/g.test(nombre)) {
     return res.status(404).send("El nombre del pokemon debe estar en minúsculas");
   }
@@ -148,7 +144,6 @@ router.post("/pokemons", async (req, res) => {
     res.status(404).send(error);
   }
 });
-
 
 // RUTA GET TYPES:
 router.get("/types", async (req, res) => {

@@ -79,6 +79,7 @@ export default function PokemonCreate() {
     ) {
       return alert("no se puede crear el pokemon");
     }
+
     setLoading(true);
     try {
       await axios.get("http://localhost:3001/pokemons?name=" + input.nombre);
