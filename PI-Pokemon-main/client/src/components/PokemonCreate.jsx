@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getTypes } from "../actions";
-import { validate } from "../helpers/validations";
+import { getErrors } from "../helpers/errors";
 import ValidateInput from "./ValidateInput";
 import ValidateSelect from "./ValidateSelect";
 import axios from "axios";
@@ -25,8 +25,8 @@ export default function PokemonCreate() {
     velocidad: "",
     fuerza: "",
   });
-  const [isValidated, setIsValidated] = useState(false);
-  const errors = validate(input, nombreDisponible, isValidated);
+  const [isFormValidated, setIsFormValidated] = useState(false);
+  const errors = getErrors(input, nombreDisponible);
 
   useEffect(() => {
     dispatch(getTypes());
@@ -64,9 +64,9 @@ export default function PokemonCreate() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setIsValidated(true);
+    setIsFormValidated(true);
 
-    const errors = validate(input, nombreDisponible, true);
+    const errors = getErrors(input, nombreDisponible);
     if (
       errors.nombre ||
       errors.tipos ||
@@ -106,7 +106,7 @@ export default function PokemonCreate() {
         velocidad: "",
         fuerza: "",
       });
-      setIsValidated(false);
+      
     } catch (error) {
       alert("pokemon  no puede ser creado");
     }
@@ -128,6 +128,7 @@ export default function PokemonCreate() {
           label="Nombre"
           error={errors.nombre}
           onChange={(e) => handleChangeName(e)}
+          isFormValidated={isFormValidated}
         />
         <ValidateSelect
           allTypes={allTypes}
@@ -136,6 +137,7 @@ export default function PokemonCreate() {
           error={errors.tipos}
           handleTypes={handleTypes}
           handleRemove={handleRemove}
+          isFormValidated={isFormValidated}
         />
 
         <ValidateInput
@@ -145,6 +147,7 @@ export default function PokemonCreate() {
           label="Vida"
           error={errors.vida}
           onChange={(e) => handleChange(e)}
+          isFormValidated={isFormValidated}
         />
 
         <ValidateInput
@@ -154,6 +157,7 @@ export default function PokemonCreate() {
           label="Peso"
           error={errors.peso}
           onChange={(e) => handleChange(e)}
+          isFormValidated={isFormValidated}
         />
 
         <ValidateInput
@@ -163,6 +167,7 @@ export default function PokemonCreate() {
           label="Fuerza"
           error={errors.fuerza}
           onChange={(e) => handleChange(e)}
+          isFormValidated={isFormValidated}
         />
 
         <ValidateInput
@@ -172,6 +177,7 @@ export default function PokemonCreate() {
           label="Velocidad"
           error={errors.velocidad}
           onChange={(e) => handleChange(e)}
+          isFormValidated={isFormValidated}
         />
 
         <ValidateInput
@@ -181,6 +187,7 @@ export default function PokemonCreate() {
           label="Defensa"
           error={errors.defensa}
           onChange={(e) => handleChange(e)}
+          isFormValidated={isFormValidated}
         />
 
         <ValidateInput
@@ -190,6 +197,7 @@ export default function PokemonCreate() {
           label="Altura"
           error={errors.altura}
           onChange={(e) => handleChange(e)}
+          isFormValidated={isFormValidated}
         />
 
         <ValidateInput
@@ -199,9 +207,10 @@ export default function PokemonCreate() {
           label="Imagen"
           error={errors.imagen}
           onChange={(e) => handleChange(e)}
+          isFormValidated={isFormValidated}
         />
 
-        <button className="btn"> crear</button>
+        <button className="btn" type='onSubmit'> crear</button>
         {loading && <Loader />}
       </form>
     </div>

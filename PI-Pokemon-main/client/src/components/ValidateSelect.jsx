@@ -1,14 +1,18 @@
-
 import "./validateSelect.css";
+import { useState } from "react";
 
+export default function ValidateSelect({ tipos, name, allTypes, handleRemove, handleTypes, error,isFormValidated}) {
+  const [isValidated, setIsValidated] = useState(false);
 
-export default function ValidateSelect({ tipos, name, allTypes, handleRemove, handleTypes, error }) {
-console.log("🚀 ~ file: ValidateSelect.jsx ~ line 6 ~ ValidateSelect ~ error", error)
+  function handleChange(e) {
+    setIsValidated(true);
+    handleTypes(e);
+  }
 
   return (
     <div>
       <label>Tipo:</label>
-      <select className="selectTipos" disabled={tipos[1]} name={name} onChange={(e) => handleTypes(e)}>
+      <select className="selectTipos" disabled={tipos[1]} name={name} onChange={(e) => handleChange(e)}>
         {allTypes.map((t) => (
           <option key={t.id}>{t.nombre}</option>
         ))}
@@ -19,7 +23,7 @@ console.log("🚀 ~ file: ValidateSelect.jsx ~ line 6 ~ ValidateSelect ~ error",
           {t} x
         </button>
       ))}
-      <div className="errors">{error}</div>
+      <div className="errors">{isValidated||isFormValidated ? error : ""}</div>
     </div>
   );
 }

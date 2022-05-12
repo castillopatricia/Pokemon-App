@@ -1,8 +1,6 @@
-export function validate(input, nombreDisponible, isValidated) {
+export function getErrors(input, nombreDisponible) {
   let errors = {};
-  if (!isValidated) {
-    return errors;
-  }
+
   if (!input.nombre) {
     errors.nombre = "Ingresar un nombre";
   } else if (!/^[a-z]+$/g.test(input.nombre)) {
