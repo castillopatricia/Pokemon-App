@@ -7,7 +7,6 @@ const initialState = {
   allTypes: [],
   filteredByCreate: "All",
   filteredByType: "All",
-  filterByWeight: "All",
   orderedPokemonsByName: "",
   orderedPokemonsByForce: "",
   pokemonDetail: {},

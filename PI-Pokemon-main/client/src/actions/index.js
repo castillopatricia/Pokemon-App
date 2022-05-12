@@ -24,7 +24,7 @@ export function getTypes() {
         payload: json.data,
       });
     } catch (error) {
-      alert('no existen los tipos')
+      alert("no existen los tipos");
     }
   };
 }
