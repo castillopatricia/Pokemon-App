@@ -5,7 +5,10 @@ const { Pokemon, Tipo } = require("../db");
 const { getAllPokemons } = require("../controllers/controllers");
 const router = Router();
 
-//  rutas y funciones controladoras:
+
+
+//ruta get pokemons:
+
 router.get("/pokemons", async (req, res) => {
   const { name } = req.query;
 
@@ -48,6 +51,9 @@ router.get("/pokemons", async (req, res) => {
   }
 });
 
+
+// ruta get con id por params
+
 router.get("/pokemons/:idPokemon", async (req, res) => {
   try {
     const { idPokemon } = req.params;
@@ -83,9 +89,13 @@ router.get("/pokemons/:idPokemon", async (req, res) => {
       res.send(pokemondetail);
     }
   } catch (error) {
-    res.status(404).send("No se encontro el pokemon requerido");
+    res.status(404).send("No se encontró el pokemon requerido");
   }
 });
+
+
+//RUTA POST:
+
 router.post("/pokemons", async (req, res) => {
   const { nombre } = req.body;
 
@@ -127,6 +137,9 @@ router.post("/pokemons", async (req, res) => {
         }
       }
     }
+
+    //crear en base de datos:
+
     const pokemonCreated = await Pokemon.create(req.body);
 
     await pokemonCreated.addTipos(req.body.tipos);
@@ -136,6 +149,8 @@ router.post("/pokemons", async (req, res) => {
   }
 });
 
+
+// RUTA GET TYPES:
 router.get("/types", async (req, res) => {
   const typesApi = await axios.get("https://pokeapi.co/api/v2/type");
 
@@ -150,4 +165,8 @@ router.get("/types", async (req, res) => {
   const todosLosTipos = await Tipo.findAll();
   res.json(todosLosTipos);
 });
+
+
+
+
 module.exports = router;

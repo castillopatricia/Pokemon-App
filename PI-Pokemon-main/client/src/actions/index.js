@@ -3,21 +3,29 @@ import axios from "axios";
 export function getPokemons() {
   return async function (dispatch) {
     dispatch({ type: "POKEMONS_LOADING" });
-    var json = await axios.get("http://localhost:3001/pokemons");
-    return dispatch({
-      type: "GET_POKEMONS",
-      payload: json.data,
-    });
+    try {
+      var json = await axios.get("http://localhost:3001/pokemons");
+      return dispatch({
+        type: "GET_POKEMONS",
+        payload: json.data,
+      });
+    } catch (error) {
+      alert("no existen los pokemones");
+    }
   };
 }
 
 export function getTypes() {
   return async function (dispatch) {
-    var json = await axios.get("http://localhost:3001/types");
-    return dispatch({
-      type: "GET_TYPES",
-      payload: json.data,
-    });
+    try {
+      var json = await axios.get("http://localhost:3001/types");
+      return dispatch({
+        type: "GET_TYPES",
+        payload: json.data,
+      });
+    } catch (error) {
+      alert('no existen los tipos')
+    }
   };
 }
 

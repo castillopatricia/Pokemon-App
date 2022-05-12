@@ -39,6 +39,29 @@ export default function PokemonCreate() {
     });
   }
 
+  function handleChangeName(e) {
+    e.preventDefault();
+    setNombreDisponible(true);
+    setInput({
+      ...input,
+      nombre: e.target.value,
+    });
+  }
+
+  function handleTypes(e) {
+    e.preventDefault();
+    setInput({
+      ...input,
+      tipos: [...input.tipos, e.target.value],
+    });
+  }
+  function handleRemove(tipo) {
+    setInput({
+      ...input,
+      tipos: input.tipos.filter((t) => t !== tipo),
+    });
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setIsValidated(true);
@@ -87,29 +110,6 @@ export default function PokemonCreate() {
       alert("pokemon  no puede ser creado");
     }
     setLoading(false);
-  }
-
-  function handleChangeName(e) {
-    e.preventDefault();
-    setNombreDisponible(true);
-    setInput({
-      ...input,
-      nombre: e.target.value,
-    });
-  }
-
-  function handleTypes(e) {
-    e.preventDefault();
-    setInput({
-      ...input,
-      tipos: [...input.tipos, e.target.value],
-    });
-  }
-  function handleRemove(tipo) {
-    setInput({
-      ...input,
-      tipos: input.tipos.filter((t) => t !== tipo),
-    });
   }
 
   return (
