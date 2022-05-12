@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 export function getPokemons() {
   return async function (dispatch) {
     dispatch({ type: "POKEMONS_LOADING" });
@@ -35,12 +34,7 @@ export function filterByCreate(payload) {
     payload: payload,
   };
 }
-export function filterByWeight(payload){
-  return{
-    type:'FILTER_BY_WEIGHT',
-    payload
-  }
-}
+
 export function orderByName(payload) {
   return {
     type: "ORDER_BY_NAME",
@@ -70,22 +64,14 @@ export function getPokemonsByName(name) {
 export function getDetail(id) {
   return async function (dispatch) {
     dispatch({ type: "POKEMONS_LOADING" });
-    var json = await axios.get("http://localhost:3001/pokemons/" + id);
-    return dispatch({
-      type: "GET_POKEMON_DETAIL",
-      payload: json.data,
-    });
+    try {
+      var json = await axios.get("http://localhost:3001/pokemons/" + id);
+      return dispatch({
+        type: "GET_POKEMON_DETAIL",
+        payload: json.data,
+      });
+    } catch (error) {
+      alert("pokemon inexistente");
+    }
   };
-
 }
-
- //action con promesas
-//export function fetchPost(valor){
-  //return function (dispatch){
-    // dispatch(getPost())
-    //axios.get(`https://jsonplaceholder.typecode.com/todos/${valor}`)
-   // .then(r=>r.data)
-   //.then(d=>dispatch(receivePost(d)))
-   //.catch(e=>console.log(e))
-//  }
-//}
