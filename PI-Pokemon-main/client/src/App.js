@@ -6,6 +6,7 @@ import Detail from "./components/Detail";
 import PokemonCreate from "./components/PokemonCreate";
 
 function App() {
+
   return (
     <BrowserRouter>
       <div className="App">

@@ -50,10 +50,12 @@ export default function PokemonCreate() {
 
   function handleTypes(e) {
     e.preventDefault();
-    setInput({
-      ...input,
-      tipos: [...input.tipos, e.target.value],
-    });
+    if (!input.tipos.includes(e.target.value)) {
+      setInput({
+        ...input,
+        tipos: [...input.tipos, e.target.value],
+      });
+    }
   }
   function handleRemove(tipo) {
     setInput({
@@ -106,7 +108,6 @@ export default function PokemonCreate() {
         velocidad: "",
         fuerza: "",
       });
-      
     } catch (error) {
       alert("pokemon  no puede ser creado");
     }
@@ -210,7 +211,10 @@ export default function PokemonCreate() {
           isFormValidated={isFormValidated}
         />
 
-        <button className="btn" type='onSubmit'> crear</button>
+        <button className="btn" type="onSubmit">
+          {" "}
+          crear
+        </button>
         {loading && <Loader />}
       </form>
     </div>
