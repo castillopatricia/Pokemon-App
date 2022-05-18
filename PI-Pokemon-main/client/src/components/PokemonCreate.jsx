@@ -8,6 +8,7 @@ import ValidateSelect from "./ValidateSelect";
 import axios from "axios";
 import "./pokemonCreate.css";
 import Loader from "./Loader";
+import { baseUrl } from "../config";
 
 export default function PokemonCreate() {
   const allTypes = useSelector((state) => state.types);
@@ -84,7 +85,7 @@ export default function PokemonCreate() {
 
     setLoading(true);
     try {
-      await axios.get("http://localhost:3001/pokemons?name=" + input.nombre);
+      await axios.get(`${baseUrl}/pokemons?name=` + input.nombre);
       setNombreDisponible(false);
       setLoading(false);
       alert("no se puede crear el pokemon");
@@ -94,7 +95,7 @@ export default function PokemonCreate() {
     }
 
     try {
-      await axios.post("http://localhost:3001/pokemons", input);
+      await axios.post(`${baseUrl}/pokemons`, input);
 
       alert("pokemon creado");
       setInput({
