@@ -2,6 +2,7 @@
   background-image: url(../assets/fondohome.jpg);
   min-height: 100vh;
   background-attachment: fixed;
+  background-size: cover;
 }
 
 .filtrados select {
