@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Pokemon from "./Pokemon";
 import "./home.css";
 import Pagination from "./Pagination";
-import SearchBar from "./SearchBar";
+import SearchBar from "./Search";
 import Loader from "./Loader";
 
 export default function Home() {
