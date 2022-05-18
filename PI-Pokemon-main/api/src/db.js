@@ -2,11 +2,19 @@ require("dotenv").config();
 const { Sequelize, BelongsTo, BelongsToMany, DataTypes } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
 
-const sequelize = new Sequelize(`postgres://postgres:36867593@localhost:5432/pokemon`, {
-  logging: false, 
-  native: false, 
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+  logging: false,
+  native: false,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+  dialectOptions: {
+    ssl: {
+      /* <----- Add SSL option */ rejectUnauthorized: false,
+    },
+  },
 });
 const basename = path.basename(__filename);
 
@@ -20,7 +28,6 @@ fs.readdirSync(path.join(__dirname, "/models"))
 
 // Inyectamos la conexion (sequelize) a todos los modelos.
 modelDefiners.forEach((model) => model(sequelize));
-
 
 let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);

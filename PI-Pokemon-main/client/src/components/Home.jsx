@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Pokemon from "./Pokemon";
 import "./home.css";
 import Pagination from "./Pagination";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 import Loader from "./Loader";
 
 export default function Home() {
@@ -57,7 +57,7 @@ export default function Home() {
         <Link className="btn" to="/create">
           Crear un Pokemon
         </Link>
-        <SearchBar />
+          {/* <SearchBar /> */}
       </div>
       <div>
         <div className="filtrados">
